@@ -12,15 +12,35 @@ class ViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    view.backgroundColor = .green
     // 1. Add Scroll View 
-    
+    self.view.addSubview(scrollView)
+
+    self.scrollView.translatesAutoresizingMaskIntoConstraints = false
     // 2. Add Scroll Constraints
+    self.edgesForExtendedLayout = []
+    // frame is diff from bounds
+    let _ = [
+        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8),
+        // scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 8)
+        scrollView.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor, constant: 8)
+        ].map { $0.isActive = true }
     
     // 3. Add View 
+    self.scrollView.addSubview(redView)
+    self.redView.translatesAutoresizingMaskIntoConstraints = false
     
     // 4. Add View Contraints
-    
+    let _ = [
+        redView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 2.0),
+        redView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 2.0),
+        redView.topAnchor.constraint(equalTo: self.scrollView.topAnchor),
+        redView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor),
+        redView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor),
+        redView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor)
+    ].map { $0.isActive = true }
     // 5. Make it scroll
     
   }
@@ -32,11 +52,11 @@ class ViewController: UIViewController {
 
   lazy var scrollView: UIScrollView = {
     let view: UIScrollView = UIScrollView()
-    view.backgroundColor = .green
+    view.backgroundColor = .blue
     view.showsVerticalScrollIndicator = true
     view.showsHorizontalScrollIndicator = true
-    view.alwaysBounceHorizontal = true
-    view.alwaysBounceVertical = true
+    view.alwaysBounceHorizontal = false
+    view.alwaysBounceVertical = false
     return view
   }()
   
